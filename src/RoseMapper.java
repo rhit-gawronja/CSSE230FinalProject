@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 import javax.swing.*;
 public class RoseMapper{
@@ -28,6 +29,13 @@ public class RoseMapper{
             this.destination=destination;
             this.cost=cost;
         }
+    }
+    private LocationNode getLocationNode(String name){
+
+    }
+    public void dijkstra(String start){
+       PriorityQueue<Path> pq=new PriorityQueue<>();
+       LocationNode start= 
     }
     class LocationNode{
         public String name;

@@ -35,7 +35,7 @@ public class RoseMapper{
     }
     public void dijkstra(String start){
        PriorityQueue<Path> pq=new PriorityQueue<>();
-       LocationNode start= 
+       LocationNode start= new LocationNode();
     }
     class LocationNode{
         public String name;

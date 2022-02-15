@@ -6,6 +6,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.w3c.dom.events.MouseEvent;
+
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class VisualMapper extends JFrame {
-
+	static RoseMapper rmap;
 	private JFrame window;
 
 	public static void main(String[] args) {
@@ -47,6 +49,49 @@ public class VisualMapper extends JFrame {
 		}
 	}
 	class Console extends JTextArea{
+
+	}
+	class ControlPanel extends JPanel{
+		InputField In = new InputField();
+		StartButton start=new StartButton();
+		public ControlPanel(){
+			this.add(this.In);
+			this.add(this.start);
+
+		}
+		class StartButton extends JButton{
+			public StartButton(){
+				super("Start destination");
+				this.addMouseListener(new MouseAdapter(){
+					public void mousePressed(MouseEvent e){
+						try{
+							String a=ControlPanel.this.In.getText();
+							rmap.dijkstra(a);
+
+						}finally{
+							
+						}
+					}
+				});
+			}
+	
+		}
+		class destinationButton extends JButton{
+			
+		}
+	}
+	class startButton extends JButton{
+		public startButton(){
+			super("Start destination");
+			this.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+
+				}
+			});
+		}
+
+	}
+	class destinationButton extends JButton{
 
 	}
 

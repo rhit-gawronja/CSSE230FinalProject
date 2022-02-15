@@ -8,7 +8,47 @@ import javax.swing.*;
 public class RoseMapper { // TODO Write good test code so that we actually know if this works.
 	public void createMap() {
 	}
+	public void clearAll() {
+		// for (LocationNode x : nodeMap.values())
+		// 	x.reset();
+	}
+	public void dijkstra(String startName) {
+		PriorityQueue<Path> pq = new PriorityQueue<Path>();
 
+		// LocationNode start = nodeMap.get(startName);
+		// if (start == null) // TODO Try to handle this better?
+		// 	throw new NoSuchElementException("Not Found");
+
+		// clearAll();
+		// pq.add(new Path(start, 0));
+		// start.cost = 0;
+		// int nodesSeen = 0;
+
+		// while (!pq.isEmpty() && nodesSeen < nodeMap.size()) {
+		// 	Path rec = pq.remove();
+		// 	LocationNode x = rec.destination;
+		// 	if (x.checked)
+		// 		continue;
+
+		// 	x.checked = true;
+		// 	nodesSeen++;
+
+		// 	for (Path path : x.connections) {
+		// 		LocationNode y = path.destination;
+		// 		double cvw = path.cost;
+
+		// 		if (cvw < 0) { // TODO: this could be big problem, need better solution than this?
+		// 			System.out.println("Graph has negative edges");
+		// 			break;
+		// 		}
+		// 		if (y.cost > x.cost + cvw) {
+		// 			y.cost = x.cost + cvw;
+		// 			y.prev = x;
+		// 			pq.add(new Path(y, y.cost));
+		// 		}
+			}
+		
+	}
 	class Map {
 		HashMap<String, LocationNode> nodeMap;
 
@@ -31,10 +71,7 @@ public class RoseMapper { // TODO Write good test code so that we actually know 
 
 		}
 
-		public void clearAll() {
-			for (LocationNode x : nodeMap.values())
-				x.reset();
-		}
+		
 
 		public void printPath(LocationNode dest) { // for testing, will probably output to graphics instead of print
 													// later
@@ -45,43 +82,7 @@ public class RoseMapper { // TODO Write good test code so that we actually know 
 			System.out.print(dest.name);
 		}
 
-		public void dijkstra(String startName) {
-			PriorityQueue<Path> pq = new PriorityQueue<Path>();
-
-			LocationNode start = nodeMap.get(startName);
-			if (start == null) // TODO Try to handle this better?
-				throw new NoSuchElementException("Not Found");
-
-			clearAll();
-			pq.add(new Path(start, 0));
-			start.cost = 0;
-			int nodesSeen = 0;
-
-			while (!pq.isEmpty() && nodesSeen < nodeMap.size()) {
-				Path rec = pq.remove();
-				LocationNode x = rec.destination;
-				if (x.checked)
-					continue;
-
-				x.checked = true;
-				nodesSeen++;
-
-				for (Path path : x.connections) {
-					LocationNode y = path.destination;
-					double cvw = path.cost;
-
-					if (cvw < 0) { // TODO: this could be big problem, need better solution than this?
-						System.out.println("Graph has negative edges");
-						break;
-					}
-					if (y.cost > x.cost + cvw) {
-						y.cost = x.cost + cvw;
-						y.prev = x;
-						pq.add(new Path(y, y.cost));
-					}
-				}
-			}
-		}
+		
 	}
 
 	class Location { // TODO What is this class? can we get rid of this? -Derek
@@ -123,4 +124,3 @@ public class RoseMapper { // TODO Write good test code so that we actually know 
 			//cost = 0.0;
 		}
 	}
-}

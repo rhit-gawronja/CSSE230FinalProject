@@ -24,75 +24,93 @@ public class VisualMapper extends JFrame {
 	}
 
 	public VisualMapper() {
+		super("RoseMapper!!!!");
 		// add things to the window here
-		InputField In = new InputField();
-		//AddButton add = new AddButton();
+		this.setSize(800,500);
+		Container content=getContentPane();
+		content.setLayout(new BorderLayout());
+		content.add(new ControlPanel(), BorderLayout.SOUTH);
+		// pannel.add(starJButton);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		window = new JFrame();
-		JButton starJButton = new JButton("Start");
-		
-		//pannel.add(starJButton);
-		
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setTitle("RoseMapper!!!!");
-		JLabel background =new JLabel(new ImageIcon("C:\\Users\\gawronja\\Documents\\HomeWork\\CSSE230\\CSSE230FinalProject\\img\\newCampusMap.jpg"));
+		JLabel background = new JLabel(new ImageIcon(
+				"C:\\Users\\gawronja\\Documents\\HomeWork\\CSSE230\\CSSE230FinalProject\\img\\newCampusMap.jpg"));
 		background.setLayout(new FlowLayout());
-		window.add(background);
-		window.setVisible(true);
-		
-	
+		add(background);
+		setVisible(true);
+
 	}
-	class InputField extends JTextField{
-		public InputField(){
+
+	class InputField extends JTextField {
+		public InputField() {
 			this.setColumns(3);
 			this.selectAll();
 		}
 	}
-	class Console extends JTextArea{
+
+	class Console extends JTextArea {
 
 	}
-	class ControlPanel extends JPanel{
+
+	class ControlPanel extends JPanel {
 		InputField In = new InputField();
-		StartButton start=new StartButton();
-		public ControlPanel(){
+		InputField dIn= new InputField();
+		StartButton start = new StartButton();
+		DestinationButton dButton=new DestinationButton();
+		public ControlPanel() {
+			TitledBorder border = BorderFactory.createTitledBorder(
+					BorderFactory.createLoweredBevelBorder(), "Control Panel");
+			border.setTitleJustification(TitledBorder.LEFT);
+			this.setBorder(border);
+			this.setLayout(new FlowLayout());
+			this.add(new JLabel("Put in a start location:"));
 			this.add(this.In);
 			this.add(this.start);
+			this.add(new JLabel("Put in your final destination:"));
+			this.add(this.dIn);
+			this.add(this.dButton);
 
 		}
-		class StartButton extends JButton{
-			public StartButton(){
+
+		class StartButton extends JButton {
+			public StartButton() {
 				super("Start destination");
-				this.addMouseListener(new MouseAdapter(){
-					public void mousePressed(MouseEvent e){
-						try{
-							String a=ControlPanel.this.In.getText();
+				this.addMouseListener(new MouseAdapter() {
+					public void mousePressed(MouseEvent e) {
+						try {
+							String a = ControlPanel.this.In.getText();
 							rmap.dijkstra(a);
 
-						}finally{
-							
+						} finally {
+
 						}
 					}
 				});
 			}
+
+		}
+
+		class DestinationButton extends JButton {
+			public DestinationButton() {
+				super("Calculate Jurny destination");
+				this.addMouseListener(new MouseAdapter() {
+					public void mousePressed(MouseEvent e) {
+						try {
+							String a = ControlPanel.this.In.getText();
+							rmap.dijkstra(a);
+
+						} finally {
+
+						}
+					}
+				});
+			}
+		}
+	}
+
 	
-		}
-		class destinationButton extends JButton{
-			
-		}
-	}
-	class startButton extends JButton{
-		public startButton(){
-			super("Start destination");
-			this.addMouseListener(new MouseAdapter(){
-				public void mousePressed(MouseEvent e){
 
-				}
-			});
-		}
-
-	}
-	class destinationButton extends JButton{
-
-	}
+	
 
 }

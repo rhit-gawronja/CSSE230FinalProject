@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class RoseMapper { // TODO Write good test code so that we actually know if this works.
 	public void createMap() {
-		JFrame map = new JFrame();
 	}
 
 	class Map {
@@ -19,10 +18,6 @@ public class RoseMapper { // TODO Write good test code so that we actually know 
 
 		private LocationNode getLocationNode(String name) {
 			LocationNode x = nodeMap.get(name);
-			if (x == null) {
-				x = new LocationNode(name);
-				nodeMap.put(name, x);
-			}
 			return x;
 		}
 

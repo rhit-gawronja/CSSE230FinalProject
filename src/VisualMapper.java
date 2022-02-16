@@ -17,6 +17,7 @@ import java.util.Random;
 public class VisualMapper extends JFrame {
 	static RoseMapper rmap;
 	private JFrame window;
+	private Console cs=new Console();
 
 	public static void main(String[] args) {
 		new VisualMapper();
@@ -26,14 +27,15 @@ public class VisualMapper extends JFrame {
 	public VisualMapper() {
 		super("RoseMapper!!!!");
 		// add things to the window here
-		this.setSize(800,500);
-		Container content=getContentPane();
+		this.setSize(800, 500);
+		Container content = getContentPane();
 		content.setLayout(new BorderLayout());
 		content.add(new ControlPanel(), BorderLayout.SOUTH);
+		content.add(this.cs,BorderLayout.NORTH);
 		// pannel.add(starJButton);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JLabel background = new JLabel(new ImageIcon(
 				"C:\\Users\\gawronja\\Documents\\HomeWork\\CSSE230\\CSSE230FinalProject\\img\\newCampusMap.jpg"));
 		background.setLayout(new FlowLayout());
@@ -50,14 +52,24 @@ public class VisualMapper extends JFrame {
 	}
 
 	class Console extends JTextArea {
+		public Console(){
+			
+			this.setEditable(true);
+			TitledBorder border = BorderFactory.createTitledBorder(
+					BorderFactory.createLoweredBevelBorder(), "Output");
+			border.setTitleJustification(TitledBorder.LEFT);
+			this.setBorder(border);
+			this.append("Choose a location in a black circle\n then choose the location you want to go to");
 
+		}
 	}
 
 	class ControlPanel extends JPanel {
 		InputField In = new InputField();
-		InputField dIn= new InputField();
+		InputField dIn = new InputField();
 		StartButton start = new StartButton();
-		DestinationButton dButton=new DestinationButton();
+		DestinationButton dButton = new DestinationButton();
+
 		public ControlPanel() {
 			TitledBorder border = BorderFactory.createTitledBorder(
 					BorderFactory.createLoweredBevelBorder(), "Control Panel");
@@ -108,9 +120,5 @@ public class VisualMapper extends JFrame {
 			}
 		}
 	}
-
-	
-
-	
 
 }

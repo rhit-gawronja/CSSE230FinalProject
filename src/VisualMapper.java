@@ -18,6 +18,7 @@ public class VisualMapper extends JFrame {
 	static RoseMapper rmap;
 	private JFrame window;
 	private Console cs=new Console();
+	private String out;
 
 	public static void main(String[] args) {
 		new VisualMapper();
@@ -54,12 +55,12 @@ public class VisualMapper extends JFrame {
 	class Console extends JTextArea {
 		public Console(){
 			
-			this.setEditable(true);
+			this.setEditable(false);
 			TitledBorder border = BorderFactory.createTitledBorder(
 					BorderFactory.createLoweredBevelBorder(), "Output");
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
-			this.append("Choose a location in a black circle\n then choose the location you want to go to");
+			this.append("Choose a location in a black circle\n then choose the location you want to go to"+out);
 
 		}
 	}
@@ -82,6 +83,7 @@ public class VisualMapper extends JFrame {
 			this.add(new JLabel("Put in your final destination:"));
 			this.add(this.dIn);
 			this.add(this.dButton);
+			this.add(new ResetButton());
 
 		}
 
@@ -93,7 +95,7 @@ public class VisualMapper extends JFrame {
 						try {
 							String a = ControlPanel.this.In.getText();
 							rmap.dijkstra(a);
-
+							out="start test";
 						} finally {
 
 						}
@@ -109,10 +111,24 @@ public class VisualMapper extends JFrame {
 				this.addMouseListener(new MouseAdapter() {
 					public void mousePressed(MouseEvent e) {
 						try {
-							String a = ControlPanel.this.In.getText();
-							rmap.dijkstra(a);
+							String a = ControlPanel.this.dIn.getText();
+							out=rmap.printPath(a).toString();
 
 						} finally {
+
+						}
+					}
+				});
+			}
+		}
+		class ResetButton extends JButton{
+			public ResetButton(){
+				super("Reset the measurments");
+				this.addMouseListener(new MouseAdapter(){
+					public void mousePressed(MouseEvent e){
+						try{
+							//rmap.resetAll();
+						}finally{
 
 						}
 					}

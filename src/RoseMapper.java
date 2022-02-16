@@ -50,10 +50,12 @@ public class RoseMapper {
 	private Node getNode(String name) {
 		Node ans = rmap.get(name);
 		if (ans == null) {
-			throw new NoSuchElementException();
+			this.addNode(name);
 		} else {
 			return ans;
 		}
+		ans = rmap.get(name);
+		return ans;
 	}
 	public StringBuilder printPath(String destNode){
 		StringBuilder sb=new StringBuilder();

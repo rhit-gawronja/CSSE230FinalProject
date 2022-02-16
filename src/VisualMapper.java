@@ -10,6 +10,8 @@ import org.w3c.dom.events.MouseEvent;
 
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,8 +22,11 @@ public class VisualMapper extends JFrame {
 	private Console cs=new Console();
 	private String out;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		new VisualMapper();
+		String fileName="C:\\Users\\gawronja\\Documents\\HomeWork\\CSSE230\\CSSE230FinalProject\\maps\\rose.txt";
+		FileReader in=new FileReader(fileName);
+		rmap=new RoseMapper(in);
 
 	}
 
@@ -93,6 +98,7 @@ public class VisualMapper extends JFrame {
 				this.addMouseListener(new MouseAdapter() {
 					public void mousePressed(MouseEvent e) {
 						try {
+							System.out.println("funky button");
 							String a = ControlPanel.this.In.getText();
 							rmap.dijkstra(a);
 							out="start test";
@@ -109,10 +115,13 @@ public class VisualMapper extends JFrame {
 			public DestinationButton() {
 				super("Calculate Jurny destination");
 				this.addMouseListener(new MouseAdapter() {
+					@SuppressWarnings("deprecation")
+					@Override
 					public void mousePressed(MouseEvent e) {
 						try {
 							String a = ControlPanel.this.dIn.getText();
 							out=rmap.printPath(a).toString();
+							System.out.println(out);
 
 						} finally {
 

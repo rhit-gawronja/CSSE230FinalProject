@@ -6,7 +6,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.w3c.dom.events.MouseEvent;
 
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -115,13 +114,12 @@ public class VisualMapper extends JFrame {
 			public DestinationButton() {
 				super("Calculate Jurny destination");
 				this.addMouseListener(new MouseAdapter() {
-					@SuppressWarnings("deprecation")
-					@Override
+					
 					public void mousePressed(MouseEvent e) {
 						try {
 							String a = ControlPanel.this.dIn.getText();
 							out=rmap.printPath(a).toString();
-							System.out.println(out);
+							System.out.println(rmap.printPath(a));
 
 						} finally {
 

@@ -12,6 +12,7 @@ public class RoseMapper {
 
 	// TODO Write good test code so that we actually know if this works.
 	private HashMap<String, Node> rmap = new HashMap<String, Node>();
+	PriorityQueue<Path> path=new PriorityQueue<>();
 	public RoseMapper(FileReader fin){
 		Scanner mapData= new Scanner(fin);
 		String e;
@@ -29,6 +30,7 @@ public class RoseMapper {
                     String source  = st.nextToken( );
                     String dest    = st.nextToken( );
                     int    cost    = Integer.parseInt( st.nextToken( ) );
+					System.out.println(source);
                     this.addEdge( source, dest, cost );
                 }
 				catch(NumberFormatException f){
@@ -65,6 +67,7 @@ public class RoseMapper {
 		else{
 			printNodePath(sb,w);
 		}
+		printNodePath(sb,w);
 		return sb;
 	}
 	public void printNodePath(StringBuilder sb,Node dest){
@@ -97,10 +100,13 @@ public class RoseMapper {
 				if(w.dist>v.dist+cvw){
 					w.dist=v.dist+cvw;
 					w.prev=v;
+					System.out.println("im here");
 					pq.add(new Path(w,w.dist));
 				}
 			}
+		
 		}
+		System.out.println(pq.toString());
 	}
 
 	class Edge {

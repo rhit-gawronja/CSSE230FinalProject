@@ -1,7 +1,10 @@
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import javax.swing.*;
 
@@ -9,7 +12,30 @@ public class RoseMapper {
 
 	// TODO Write good test code so that we actually know if this works.
 	private HashMap<String, Node> rmap = new HashMap<String, Node>();
-	
+	public RoseMapper(FileReader fin){
+		Scanner mapData= new Scanner(fin);
+		String e;
+		while(mapData.hasNextLine()){
+			e=mapData.nextLine();
+			StringTokenizer st = new StringTokenizer(e);
+
+                try
+                {
+                    if( st.countTokens( ) != 3 )
+                    {
+                        System.err.println( "Skipping ill-formatted line " + e );
+                        continue;
+                    }
+                    String source  = st.nextToken( );
+                    String dest    = st.nextToken( );
+                    int    cost    = Integer.parseInt( st.nextToken( ) );
+                    this.addEdge( source, dest, cost );
+                }
+				catch(NumberFormatException f){
+					System.err.println( "Skipping ill-formatted line " + e );	
+				}
+		}
+	}
 	public void addNode(String name) {
 		Node node = new Node(name);
 		rmap.put(name, node);

@@ -23,7 +23,7 @@ public class VisualMapper extends JFrame {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		new VisualMapper();
-		String fileName="C:\\Users\\gawronja\\Documents\\HomeWork\\CSSE230\\CSSE230FinalProject\\maps\\rose.txt";
+		String fileName="maps/rose.txt";
 		FileReader in=new FileReader(fileName);
 		rmap=new RoseMapper(in);
 
@@ -41,8 +41,8 @@ public class VisualMapper extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JLabel background = new JLabel(new ImageIcon(
-				"C:\\Users\\gawronja\\Documents\\HomeWork\\CSSE230\\CSSE230FinalProject\\img\\newCampusMap.jpg"));
+		JLabel background = new JLabel(new ImageIcon( //TODO scale image with frame size?
+				"img/newCampusMap.jpg"));
 		background.setLayout(new FlowLayout());
 		add(background);
 		setVisible(true);

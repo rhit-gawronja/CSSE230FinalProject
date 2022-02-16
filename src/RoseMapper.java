@@ -24,7 +24,23 @@ public class RoseMapper {
 			return ans;
 		}
 	}
-
+	public StringBuilder printPath(String destNode){
+		StringBuilder sb=new StringBuilder();
+		Node w=rmap.get(destNode);
+		if(w==null)throw new NoSuchElementException();
+		else if(w.dist==Double.MAX_VALUE)System.out.println("can't reach");
+		else{
+			printNodePath(sb,w);
+		}
+		return sb;
+	}
+	public void printNodePath(StringBuilder sb,Node dest){
+		if(dest.prev!=null){
+			printNodePath(sb, dest.prev);
+			sb.append(" to ");
+		}
+		sb.append(dest.name);
+	}
 	public void dijkstra(String start) {
 		PriorityQueue<Path> pq = new PriorityQueue<>();
 		Node startNode = rmap.get(start);

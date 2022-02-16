@@ -9,6 +9,11 @@ public class RoseMapper {
 
 	// TODO Write good test code so that we actually know if this works.
 	private HashMap<String, Node> rmap = new HashMap<String, Node>();
+	
+	public void addNode(String name) {
+		Node node = new Node(name);
+		rmap.put(name, node);
+	}
 
 	public void addEdge(String start, String dest, double cost) {
 		Node startNode = getNode(start);

@@ -6,7 +6,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.FileNotFoundException;
@@ -18,7 +17,7 @@ import java.util.Random;
 public class VisualMapper extends JFrame {
 	private RoseMapper rmap;
 	private JFrame window;
-	private Console cs=new Console();
+	private Console cs = new Console();
 	private String out;
 
 	public static void main(String[] args) throws FileNotFoundException {
@@ -113,12 +112,12 @@ rmap.addEdge("AA", "U" ,15);
 		Container content = getContentPane();
 		content.setLayout(new BorderLayout());
 		content.add(new ControlPanel(), BorderLayout.SOUTH);
-		content.add(this.cs,BorderLayout.NORTH);
+		content.add(this.cs, BorderLayout.NORTH);
 		// pannel.add(starJButton);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JLabel background = new JLabel(new ImageIcon( //TODO scale image with frame size?
+		JLabel background = new JLabel(new ImageIcon( // TODO scale image with frame size?
 				"img/newCampusMap.jpg"));
 		background.setLayout(new FlowLayout());
 		add(background);
@@ -134,11 +133,10 @@ rmap.addEdge("AA", "U" ,15);
 	}
 
 	class Console extends JTextArea {
-		public Console(){
-			
+		public Console() {
+
 			this.setEditable(true);
-			TitledBorder border = BorderFactory.createTitledBorder(
-					BorderFactory.createLoweredBevelBorder(), "Output");
+			TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), "Output");
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
 			this.setText("Choose two of the black circle locations on the map to calculate the walking time!");
@@ -153,17 +151,17 @@ rmap.addEdge("AA", "U" ,15);
 		DestinationButton dButton = new DestinationButton();
 
 		public ControlPanel() {
-			TitledBorder border = BorderFactory.createTitledBorder(
-					BorderFactory.createLoweredBevelBorder(), "Control Panel");
+			TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),
+					"Control Panel");
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
 			this.setLayout(new FlowLayout());
 			this.add(new JLabel("Put in a start location:"));
 			this.add(this.In);
-			this.add(this.start);
 			this.add(new JLabel("Put in your final destination:"));
 			this.add(this.dIn);
 			this.add(this.dButton);
+			this.add(this.start);
 			this.add(new ResetButton());
 
 		}
@@ -176,10 +174,10 @@ rmap.addEdge("AA", "U" ,15);
 						try {
 							String a = ControlPanel.this.In.getText();
 							String b = ControlPanel.this.dIn.getText();
-							String holder=null;
-							rmap.DijkstraShortestPath(a, b,holder);
-							out="start test";
-							System.out.println(holder);
+							String holder = null;
+							rmap.DijkstraShortestPath(a, b, holder);
+							out = "start test";
+							//System.out.println(holder);
 							VisualMapper.this.cs.setText(rmap.outStr);
 						} finally {
 
@@ -194,10 +192,11 @@ rmap.addEdge("AA", "U" ,15);
 			public DestinationButton() {
 				super("List Avialable Nodes");
 				this.addMouseListener(new MouseAdapter() {
-					
+
 					public void mousePressed(MouseEvent e) {
 						try {
 							rmap.printNodes();
+							VisualMapper.this.cs.setText(rmap.outStr);
 
 						} finally {
 
@@ -206,9 +205,9 @@ rmap.addEdge("AA", "U" ,15);
 				});
 			}
 		}
-		
-		class ResetButton extends JButton{
-			public ResetButton(){
+
+		class ResetButton extends JButton {
+			public ResetButton() {
 				super("Reset the measurments");
 				this.addMouseListener(new MouseAdapter(){
 					public void mousePressed(MouseEvent e){

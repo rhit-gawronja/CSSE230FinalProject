@@ -51,6 +51,7 @@ public class RoseMapper {
 			output += key + ", ";
 		}
 		System.out.println(output);
+		setStr(output);
 	}
 
 	public void addEdge(String startname, String destname, double weight) {
@@ -100,14 +101,14 @@ public class RoseMapper {
 		return false;
 	}
 
-	public void resetNodesVisited() {
+	public void resetNodes() {
 		for (String key : nodes.keySet()) {
 			nodes.get(key).scratched = false;
 		}
 	}
 
-	public void DijkstraShortestPath(String startName, String endName,String holder) {
-		resetNodesVisited();
+	public void DijkstraShortestPath(String startName, String endName, String holder) {
+		resetNodes();
 		LocationNode start = nodes.get(startName);
 		LocationNode end = nodes.get(endName);
 		HashMap<LocationNode, LocationNode> changedAt = new HashMap<>();
@@ -125,7 +126,7 @@ public class RoseMapper {
 		}
 		start.scratched = true;
 		while (true) {
-			LocationNode currentNode = closestReachableUnvisited(shortestPathMap);
+			LocationNode currentNode = nextNode(shortestPathMap);
 			if (currentNode == null) {
 				System.out.println("There isn't a path between " + start.name + " and " + end.name);
 				return;
@@ -141,12 +142,13 @@ public class RoseMapper {
 					if (parent == null) {
 						break;
 					}
-					path = parent.name + " " + path;
+					path = parent.name + "->" + path;
 					child = parent;
 				}
 				System.out.println(path);
-				setStr("The path costs: " + shortestPathMap.get(end));
-				
+				System.out.println("The path costs: " + shortestPathMap.get(end));
+				setStr("The shortest path is: " + path + " cost: " + shortestPathMap.get(end));
+
 				return;
 			}
 			currentNode.scratched = true;
@@ -163,10 +165,10 @@ public class RoseMapper {
 	}
 
 	private void setStr(String string) {
-		outStr=string;
+		outStr = string;
 	}
 
-	private LocationNode closestReachableUnvisited(HashMap<LocationNode, Double> shortestPathMap) {
+	private LocationNode nextNode(HashMap<LocationNode, Double> shortestPathMap) {
 
 		double shortestDistance = Double.POSITIVE_INFINITY;
 		LocationNode closestReachableNode = null;

@@ -43,9 +43,10 @@ public class RoseMapper {
 		LocationNode temp = new LocationNode(type, name);
 		nodes.put(name, temp);
 	}
+
 	public void printNodes() {
 		String output = "";
-		for(String key : nodes.keySet()) {
+		for (String key : nodes.keySet()) {
 			output += key + ", ";
 		}
 		System.out.println(output);
@@ -218,4 +219,3 @@ public class RoseMapper {
 	}
 
 }
-

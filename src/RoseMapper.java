@@ -1,18 +1,17 @@
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.NoSuchElementException;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import javax.swing.*;
-
 public class RoseMapper {
+	private HashMap<String, LocationNode> nodes;
+	private boolean directed;
 
-	// TODO Write good test code so that we actually know if this works.
-	private HashMap<String, Node> rmap = new HashMap<String, Node>();
-	PriorityQueue<Path> path=new PriorityQueue<>();
+	RoseMapper() {
+		HashMap<String, LocationNode> nodes = new HashMap<String, LocationNode>();
+		this.nodes = nodes;
+	}
 	public RoseMapper(FileReader fin){
 		Scanner mapData= new Scanner(fin);
 		String e;
@@ -37,123 +36,178 @@ public class RoseMapper {
 					System.err.println( "Skipping ill-formatted line " + e );	
 				}
 		}
-	}
-	public void addNode(String name) {
-		Node node = new Node(name);
-		rmap.put(name, node);
+		mapData.close();
 	}
 
-	public void addEdge(String start, String dest, double cost) {
-		Node startNode = getNode(start);
-		Node destNode = getNode(dest);
-		startNode.adj.add(new Edge(destNode, cost));
+	public void addNode(int type, String name) {
+		LocationNode temp = new LocationNode(type, name);
+		nodes.put(name, temp);
 	}
 
-	private Node getNode(String name) {
-		Node ans = rmap.get(name);
-		if (ans == null) {
-			this.addNode(name);
-		} else {
-			return ans;
+	public void addEdge(String startname, String destname, double weight) {
+		LocationNode source = nodes.get(startname);
+		LocationNode destination = nodes.get(destname);
+		addEdgeHelper(source, destination, weight);
+
+		if (!directed && source != destination) {
+			addEdgeHelper(destination, source, weight);
 		}
-		ans = rmap.get(name);
-		return ans;
 	}
-	public StringBuilder printPath(String destNode){
-		StringBuilder sb=new StringBuilder();
-		Node w=rmap.get(destNode);
-		if(w==null)throw new NoSuchElementException();
-		else if(w.dist==Double.MAX_VALUE)System.out.println("can't reach");
-		else{
-			printNodePath(sb,w);
+
+	private void addEdgeHelper(LocationNode a, LocationNode b, double weight) {
+		for (Path edge : a.edges) {
+			if (edge.source == a && edge.destination == b) {
+				edge.weight = weight;
+				return;
+			}
 		}
-		printNodePath(sb,w);
-		return sb;
+		a.edges.add(new Path(a, b, weight));
 	}
-	public void printNodePath(StringBuilder sb,Node dest){
-		if(dest.prev!=null){
-			printNodePath(sb, dest.prev);
-			sb.append(" to ");
-		}
-		sb.append(dest.name);
-	}
-	public void dijkstra(String start) {
-		PriorityQueue<Path> pq = new PriorityQueue<>();
-		Node startNode = rmap.get(start);
-		if (startNode == null)
-			throw new NoSuchElementException();
-		int nodeSeen = 0;
-		pq.add(new Path(startNode, 0));
-		startNode.dist = 0;
-		while (!pq.isEmpty() && nodeSeen < rmap.size()) {
-			Path vrec = pq.remove();
-			Node v = vrec.dest;
-			if (v.scratch != 0) {
+
+	public void printEdges() {
+		for (String key : nodes.keySet()) {
+			LinkedList<Path> edges = nodes.get(key).edges;
+
+			if (edges.isEmpty()) {
+				System.out.println("Node " + nodes.get(key).name + " has no edges.");
 				continue;
 			}
-			v.scratch = 1;
-			nodeSeen++;
-			for (Edge e : v.adj) {
-				Node w=e.dest;
-				double cvw=e.cost;
-				if(cvw<0);
-				if(w.dist>v.dist+cvw){
-					w.dist=v.dist+cvw;
-					w.prev=v;
-					System.out.println("im here");
-					pq.add(new Path(w,w.dist));
+			System.out.print("Node " + nodes.get(key).name + " has edges to: ");
+
+			for (Path edge : edges) {
+				System.out.print(edge.destination.name + "(" + edge.weight + ") ");
+			}
+			System.out.println();
+		}
+	}
+
+	public boolean hasEdge(LocationNode source, LocationNode destination) {
+		LinkedList<Path> edges = source.edges;
+		for (Path edge : edges) {
+			if (edge.destination == destination) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void resetNodesVisited() {
+		for (String key : nodes.keySet()) {
+			nodes.get(key).scratched = false;
+		}
+	}
+
+	public void DijkstraShortestPath(String startName, String endName) {
+		LocationNode start = nodes.get(startName);
+		LocationNode end = nodes.get(endName);
+		HashMap<LocationNode, LocationNode> changedAt = new HashMap<>();
+		changedAt.put(start, null);
+		HashMap<LocationNode, Double> shortestPathMap = new HashMap<>();
+		for (String key : nodes.keySet()) {
+			if (nodes.get(key) == start)
+				shortestPathMap.put(start, 0.0);
+			else
+				shortestPathMap.put(nodes.get(key), Double.POSITIVE_INFINITY);
+		}
+		for (Path edge : start.edges) {
+			shortestPathMap.put(edge.destination, edge.weight);
+			changedAt.put(edge.destination, start);
+		}
+		start.scratched = true;
+		while (true) {
+			LocationNode currentNode = closestReachableUnvisited(shortestPathMap);
+			if (currentNode == null) {
+				System.out.println("There isn't a path between " + start.name + " and " + end.name);
+				return;
+			}
+			if (currentNode == end) {
+				System.out.println(
+						"The path with the smallest weight between " + start.name + " and " + end.name + " is:");
+
+				LocationNode child = end;
+				String path = end.name;
+				while (true) {
+					LocationNode parent = changedAt.get(child);
+					if (parent == null) {
+						break;
+					}
+					path = parent.name + " " + path;
+					child = parent;
+				}
+				System.out.println(path);
+				System.out.println("The path costs: " + shortestPathMap.get(end));
+				return;
+			}
+			currentNode.scratched = true;
+			for (Path edge : currentNode.edges) {
+				if (edge.destination.scratched)
+					continue;
+
+				if (shortestPathMap.get(currentNode) + edge.weight < shortestPathMap.get(edge.destination)) {
+					shortestPathMap.put(edge.destination, shortestPathMap.get(currentNode) + edge.weight);
+					changedAt.put(edge.destination, currentNode);
 				}
 			}
-		
-		}
-		System.out.println(pq.toString());
-	}
-
-	class Edge {
-		public Node dest;
-		public double cost;
-
-		public Edge(Node d, double cost) {
-			this.dest = d;
-			this.cost = cost;
 		}
 	}
 
-	class Path implements Comparable<Path> {
-		public Node dest;
-		public double cost;
+	private LocationNode closestReachableUnvisited(HashMap<LocationNode, Double> shortestPathMap) {
 
-		Path(Node d, double cost) {
-			this.dest = d;
-			this.cost = cost;
+		double shortestDistance = Double.POSITIVE_INFINITY;
+		LocationNode closestReachableNode = null;
+		for (String key : nodes.keySet()) {
+			if (nodes.get(key).scratched)
+				continue;
+
+			double currentDistance = shortestPathMap.get(nodes.get(key));
+			if (currentDistance == Double.POSITIVE_INFINITY)
+				continue;
+
+			if (currentDistance < shortestDistance) {
+				shortestDistance = currentDistance;
+				closestReachableNode = nodes.get(key);
+			}
 		}
-
-		@Override
-		public int compareTo(RoseMapper.Path o) {
-			// TODO Auto-generated method stub
-			return cost < o.cost ? -1 : cost > o.cost ? 1 : 0;
-		}
-
+		return closestReachableNode;
 	}
 
-	class Node {
-		public String name;
-		public ArrayList<Edge> adj;
-		public double dist;
-		public Node prev;
-		public int scratch;
+	public class Path implements Comparable<Path> {
 
-		public Node(String n) {
-			this.name = n;
+		LocationNode source;
+		LocationNode destination;
+		double weight;
 
-			this.adj = new ArrayList<>();
-
+		Path(LocationNode s, LocationNode d, double w) {
+			source = s;
+			destination = d;
+			weight = w;
 		}
 
-		public void reset() {
-			this.dist = Double.MAX_VALUE;
-			this.prev = null;
-			scratch = 0;
+		public String toString() {
+			return String.format("(%s -> %s, %f)", source.name, destination.name, weight);
+		}
+
+		public int compareTo(Path otherEdge) {
+			if (this.weight > otherEdge.weight) {
+				return 1;
+			} else
+				return -1;
 		}
 	}
+
+	class LocationNode {
+		int type;
+		String name;
+		private boolean scratched;
+		LinkedList<Path> edges;
+
+		LocationNode(int type, String name) {
+			this.type = type;
+			this.name = name;
+			scratched = false;
+			edges = new LinkedList<>();
+		}
+	}
+
 }
+

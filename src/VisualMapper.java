@@ -16,21 +16,36 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class VisualMapper extends JFrame {
-	static RoseMapper rmap;
+	private RoseMapper rmap;
 	private JFrame window;
 	private Console cs=new Console();
 	private String out;
 
 	public static void main(String[] args) throws FileNotFoundException {
-		new VisualMapper();
-		String fileName="maps/rose.txt";
-		FileReader in=new FileReader(fileName);
-		rmap=new RoseMapper(in);
+		RoseMapper rmap = new RoseMapper();
+		new VisualMapper(rmap);
+//		String fileName="maps/rose.txt";
+//		FileReader in=new FileReader(fileName);
+//		rmap=new RoseMapper(in);
+		rmap.addNode(1, "A");
+		rmap.addNode(1, "B");
+		rmap.addNode(1, "C");
+		rmap.addNode(1, "D");
+		rmap.addNode(1, "E");
+		rmap.addNode(1, "F");
+		
+		rmap.addEdge("A", "B", 8);
+		rmap.addEdge("A", "C", 10);
+		rmap.addEdge("A", "D", 5);
+		rmap.addEdge("B", "C", 1);
+		rmap.addEdge("C", "D", 3);
+		rmap.addEdge("B", "D", 4);
 
 	}
 
-	public VisualMapper() {
+	public VisualMapper(RoseMapper rmap) {
 		super("RoseMapper!!!!");
+		this.rmap = rmap;
 		// add things to the window here
 		this.setSize(800, 500);
 		Container content = getContentPane();
@@ -99,7 +114,8 @@ public class VisualMapper extends JFrame {
 						try {
 							System.out.println("funky button");
 							String a = ControlPanel.this.In.getText();
-							rmap.dijkstra(a);
+							String b = ControlPanel.this.dIn.getText();
+							rmap.DijkstraShortestPath(a, b);
 							out="start test";
 						} finally {
 
@@ -112,14 +128,14 @@ public class VisualMapper extends JFrame {
 
 		class DestinationButton extends JButton {
 			public DestinationButton() {
-				super("Calculate Jurny destination");
+				super("Calculate Journy destination");
 				this.addMouseListener(new MouseAdapter() {
 					
 					public void mousePressed(MouseEvent e) {
 						try {
-							String a = ControlPanel.this.dIn.getText();
-							out=rmap.printPath(a).toString();
-							System.out.println(rmap.printPath(a));
+//							String a = ControlPanel.this.dIn.getText();
+//							out=rmap.printPath(a).toString();
+//							System.out.println(rmap.printPath(a));
 
 						} finally {
 

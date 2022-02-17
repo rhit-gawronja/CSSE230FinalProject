@@ -18,6 +18,7 @@ public class RoseMapper {
 		String e;
 		while(mapData.hasNextLine()){
 			e=mapData.nextLine();
+			//test
 			StringTokenizer st = new StringTokenizer(e);
 
                 try

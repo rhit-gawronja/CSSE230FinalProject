@@ -1,31 +1,18 @@
 import java.awt.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import java.awt.event.*;
-import java.awt.geom.*;
+
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class VisualMapper extends JFrame {
 	private RoseMapper rmap;
-	private JFrame window;
 	private Console cs = new Console();
-	private String out;
-
 	public static void main(String[] args) throws FileNotFoundException {
 		RoseMapper rmap = new RoseMapper();
 		new VisualMapper(rmap);
-//		String fileName="maps/rose.txt";
-//		FileReader in=new FileReader(fileName);
-//		rmap=new RoseMapper(in);
 		rmap.addNode(1, "A");
 		rmap.addNode(1, "B");
 		rmap.addNode(1, "C");
@@ -114,16 +101,12 @@ public class VisualMapper extends JFrame {
 		content.setLayout(new BorderLayout());
 		content.add(new ControlPanel(), BorderLayout.SOUTH);
 		content.add(this.cs, BorderLayout.NORTH);
-		// pannel.add(starJButton);
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		JLabel background = new JLabel(new ImageIcon( // TODO scale image with frame size?
 				"img/newCampusMap.jpg"));
 		background.setLayout(new FlowLayout());
 		add(background);
 		setVisible(true);
-
 	}
 
 	class InputField extends JTextField {
@@ -135,22 +118,18 @@ public class VisualMapper extends JFrame {
 
 	class Console extends JTextArea {
 		public Console() {
-
 			this.setEditable(true);
 			TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), "Output");
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
 			this.setText("Choose two of the black circle locations on the map to calculate the walking time!");
-
 		}
 	}
-
 	class ControlPanel extends JPanel {
 		InputField In = new InputField();
 		InputField dIn = new InputField();
 		StartButton start = new StartButton();
 		DestinationButton dButton = new DestinationButton();
-
 		public ControlPanel() {
 			TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),
 					"Control Panel");
@@ -164,9 +143,7 @@ public class VisualMapper extends JFrame {
 			this.add(this.dButton);
 			this.add(this.start);
 			this.add(new ResetButton());
-
 		}
-
 		class StartButton extends JButton {
 			public StartButton() {
 				super("Find Shortest Path");
@@ -177,7 +154,7 @@ public class VisualMapper extends JFrame {
 							String b = ControlPanel.this.dIn.getText();
 							String holder = null;
 							rmap.DijkstraShortestPath(a, b, holder);
-							out = "start test";
+
 							// System.out.println(holder);
 							VisualMapper.this.cs.setText(rmap.outStr);
 						} finally {
@@ -186,7 +163,6 @@ public class VisualMapper extends JFrame {
 					}
 				});
 			}
-
 		}
 
 		class DestinationButton extends JButton {

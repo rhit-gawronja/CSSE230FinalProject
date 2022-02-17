@@ -1,12 +1,10 @@
-import java.io.FileReader;
+
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class RoseMapper {
 	private HashMap<String, LocationNode> nodes;
-	private boolean directed;
+
 	public String outStr;
 
 	RoseMapper() {

@@ -13,32 +13,6 @@ public class RoseMapper {
 		HashMap<String, LocationNode> nodes = new HashMap<String, LocationNode>();
 		this.nodes = nodes;
 	}
-//	public RoseMapper(FileReader fin){
-//		Scanner mapData= new Scanner(fin);
-//		String e;
-//		while(mapData.hasNextLine()){
-//			e=mapData.nextLine();
-//			StringTokenizer st = new StringTokenizer(e);
-//
-//                try
-//                {
-//                    if( st.countTokens( ) != 3 )
-//                    {
-//                        System.err.println( "Skipping ill-formatted line " + e );
-//                        continue;
-//                    }
-//                    String source  = st.nextToken( );
-//                    String dest    = st.nextToken( );
-//                    int    cost    = Integer.parseInt( st.nextToken( ) );
-//					System.out.println(source);
-//                    this.addEdge( source, dest, cost );
-//                }
-//				catch(NumberFormatException f){
-//					System.err.println( "Skipping ill-formatted line " + e );	
-//				}
-//		}
-//		mapData.close();
-//	}
 
 	public void addNode(int type, String name) {
 		LocationNode temp = new LocationNode(type, name);
@@ -57,22 +31,25 @@ public class RoseMapper {
 	public void addEdge(String startname, String destname, double weight) {
 		LocationNode source = nodes.get(startname);
 		LocationNode destination = nodes.get(destname);
-		addEdgeHelper(source, destination, weight);
+		
+		source.edges.add(new Path(source, destination, weight));
+		destination.edges.add(new Path(destination, source, weight));
+//		addEdgeHelper(source, destination, weight);
 
-		if (!directed && source != destination) {
-			addEdgeHelper(destination, source, weight);
-		}
+//		if (!directed && source != destination) {
+//			addEdgeHelper(destination, source, weight);
+//		}
 	}
 
-	private void addEdgeHelper(LocationNode a, LocationNode b, double weight) {
-		for (Path edge : a.edges) {
-			if (edge.source == a && edge.destination == b) {
-				edge.weight = weight;
-				return;
-			}
-		}
-		a.edges.add(new Path(a, b, weight));
-	}
+//	private void addEdgeHelper(LocationNode a, LocationNode b, double weight) {
+//		for (Path edge : a.edges) {
+//			if (edge.source == a && edge.destination == b) {
+//				edge.weight = weight;
+//				return;
+//			}
+//		}
+//		a.edges.add(new Path(a, b, weight));
+//	}
 
 	public void printEdges() {
 		for (String key : nodes.keySet()) {
@@ -147,7 +124,7 @@ public class RoseMapper {
 				}
 				System.out.println(path);
 				System.out.println("The path costs: " + shortestPathMap.get(end));
-				setStr("The shortest path is: " + path + " cost: " + shortestPathMap.get(end));
+				setStr("The shortest path is: " + path + "cost: " + shortestPathMap.get(end));
 
 				return;
 			}

@@ -32,28 +32,34 @@ public class VisualMapper extends JFrame {
 		rmap.addNode(1, "D");
 		rmap.addNode(1, "E");
 		rmap.addNode(1, "F");
-		rmap.addNode(1, "CC");
-		rmap.addNode(1, "N");
-		rmap.addNode(1, "EE");
-		rmap.addNode(1, "W");
-		rmap.addNode(1, "GG");
-		rmap.addNode(1, "BB");
-		rmap.addNode(1, "AA");
-		rmap.addNode(1, "Q");
-		rmap.addNode(1, "L");
-		rmap.addNode(1, "K");
-		rmap.addNode(1, "X");
-		rmap.addNode(1, "V");
-		rmap.addNode(1, "O");
-		rmap.addNode(1, "S");
-		rmap.addNode(1, "P");
+		rmap.addNode(1, "G");
+		rmap.addNode(1, "H");
 		rmap.addNode(1, "I");
 		rmap.addNode(1, "J");
-		rmap.addNode(1, "F");
-		rmap.addNode(1, "FF");
-		rmap.addNode(1, "R");
+		rmap.addNode(1, "K");
+		rmap.addNode(1, "L");
 		rmap.addNode(1, "M");
-		
+		rmap.addNode(1, "N");
+		rmap.addNode(1, "O");
+		rmap.addNode(1, "P");
+		rmap.addNode(1, "Q");
+		rmap.addNode(1, "R");
+		rmap.addNode(1, "S");
+		rmap.addNode(1, "T");
+		rmap.addNode(1, "U");
+		rmap.addNode(1, "V");
+		rmap.addNode(1, "W");
+		rmap.addNode(1, "X");
+		rmap.addNode(1, "Y");
+		rmap.addNode(1, "Z");
+		rmap.addNode(1, "AA");
+		rmap.addNode(1, "BB");
+		rmap.addNode(1, "CC");
+		rmap.addNode(1, "DD");
+		rmap.addNode(1, "EE");
+		rmap.addNode(1, "FF");
+		rmap.addNode(1, "GG");
+
 		rmap.addEdge("D", "B", 2);
 		rmap.addEdge("D", "FF", 10);
 		rmap.addEdge("B", "FF", 8);
@@ -79,28 +85,23 @@ public class VisualMapper extends JFrame {
 		rmap.addEdge("S", "Y", 2);
 		rmap.addEdge("S", "K", 3);
 		rmap.addEdge("V", "K", 4);
-		
-rmap.addEdge("N", "L" ,18);
-rmap.addEdge("N", "A" ,13);
-rmap.addEdge("N", "EE" ,17);
-rmap.addEdge("N", "Q" ,10);
-rmap.addEdge("N", "G" ,20);
-rmap.addEdge("GG", "K" ,17);
-rmap.addEdge("GG", "L", 5);
-rmap.addEdge("K", "X" ,30);
-rmap.addEdge("X", "D" ,60);
-rmap.addEdge("L", "W" ,15);
-rmap.addEdge("W", "BB" ,12);
-rmap.addEdge("W", "G", 3);
-rmap.addEdge("BB", "O", 2);
-rmap.addEdge("O", "EE", 5);
-rmap.addEdge("EE", "AA", 8);
-rmap.addEdge("Q", "U" ,20);
-rmap.addEdge("AA", "U" ,15);
-
-		
-
-		
+		rmap.addEdge("N", "L", 18);
+		rmap.addEdge("N", "A", 13);
+		rmap.addEdge("N", "EE", 17);
+		rmap.addEdge("N", "Q", 10);
+		rmap.addEdge("N", "G", 20);
+		rmap.addEdge("GG", "K", 17);
+		rmap.addEdge("GG", "L", 5);
+		rmap.addEdge("K", "X", 30);
+		rmap.addEdge("X", "D", 60);
+		rmap.addEdge("L", "W", 15);
+		rmap.addEdge("W", "BB", 12);
+		rmap.addEdge("W", "G", 3);
+		rmap.addEdge("BB", "O", 2);
+		rmap.addEdge("O", "EE", 5);
+		rmap.addEdge("EE", "AA", 8);
+		rmap.addEdge("Q", "U", 20);
+		rmap.addEdge("AA", "U", 15);
 
 	}
 
@@ -177,7 +178,7 @@ rmap.addEdge("AA", "U" ,15);
 							String holder = null;
 							rmap.DijkstraShortestPath(a, b, holder);
 							out = "start test";
-							//System.out.println(holder);
+							// System.out.println(holder);
 							VisualMapper.this.cs.setText(rmap.outStr);
 						} finally {
 
@@ -208,13 +209,14 @@ rmap.addEdge("AA", "U" ,15);
 
 		class ResetButton extends JButton {
 			public ResetButton() {
-				super("Reset the measurments");
-				this.addMouseListener(new MouseAdapter(){
-					public void mousePressed(MouseEvent e){
-						try{
-							//rmap.resetAll();
-							VisualMapper.this.cs.setText("Choose two of the black circle locations on the map to calculate the walking time!");
-						}finally{
+				super("Not Implimented Yet!");
+				this.addMouseListener(new MouseAdapter() {
+					public void mousePressed(MouseEvent e) {
+						try {
+							// rmap.resetAll();
+							VisualMapper.this.cs.setText(
+									"Choose two of the black circle locations on the map to calculate the walking time!");
+						} finally {
 
 						}
 					}

@@ -108,11 +108,10 @@ public class VisualMapper extends JFrame {
 
 		class StartButton extends JButton {
 			public StartButton() {
-				super("Start destination");
+				super("Find Shortest Path");
 				this.addMouseListener(new MouseAdapter() {
 					public void mousePressed(MouseEvent e) {
 						try {
-							System.out.println("funky button");
 							String a = ControlPanel.this.In.getText();
 							String b = ControlPanel.this.dIn.getText();
 							rmap.DijkstraShortestPath(a, b);
@@ -128,14 +127,12 @@ public class VisualMapper extends JFrame {
 
 		class DestinationButton extends JButton {
 			public DestinationButton() {
-				super("Calculate Journy destination");
+				super("List Avialable Nodes");
 				this.addMouseListener(new MouseAdapter() {
 					
 					public void mousePressed(MouseEvent e) {
 						try {
-//							String a = ControlPanel.this.dIn.getText();
-//							out=rmap.printPath(a).toString();
-//							System.out.println(rmap.printPath(a));
+							rmap.printNodes();
 
 						} finally {
 

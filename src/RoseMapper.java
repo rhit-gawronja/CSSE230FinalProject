@@ -12,36 +12,43 @@ public class RoseMapper {
 		HashMap<String, LocationNode> nodes = new HashMap<String, LocationNode>();
 		this.nodes = nodes;
 	}
-	public RoseMapper(FileReader fin){
-		Scanner mapData= new Scanner(fin);
-		String e;
-		while(mapData.hasNextLine()){
-			e=mapData.nextLine();
-			StringTokenizer st = new StringTokenizer(e);
-
-                try
-                {
-                    if( st.countTokens( ) != 3 )
-                    {
-                        System.err.println( "Skipping ill-formatted line " + e );
-                        continue;
-                    }
-                    String source  = st.nextToken( );
-                    String dest    = st.nextToken( );
-                    int    cost    = Integer.parseInt( st.nextToken( ) );
-					System.out.println(source);
-                    this.addEdge( source, dest, cost );
-                }
-				catch(NumberFormatException f){
-					System.err.println( "Skipping ill-formatted line " + e );	
-				}
-		}
-		mapData.close();
-	}
+//	public RoseMapper(FileReader fin){
+//		Scanner mapData= new Scanner(fin);
+//		String e;
+//		while(mapData.hasNextLine()){
+//			e=mapData.nextLine();
+//			StringTokenizer st = new StringTokenizer(e);
+//
+//                try
+//                {
+//                    if( st.countTokens( ) != 3 )
+//                    {
+//                        System.err.println( "Skipping ill-formatted line " + e );
+//                        continue;
+//                    }
+//                    String source  = st.nextToken( );
+//                    String dest    = st.nextToken( );
+//                    int    cost    = Integer.parseInt( st.nextToken( ) );
+//					System.out.println(source);
+//                    this.addEdge( source, dest, cost );
+//                }
+//				catch(NumberFormatException f){
+//					System.err.println( "Skipping ill-formatted line " + e );	
+//				}
+//		}
+//		mapData.close();
+//	}
 
 	public void addNode(int type, String name) {
 		LocationNode temp = new LocationNode(type, name);
 		nodes.put(name, temp);
+	}
+	public void printNodes() {
+		String output = "";
+		for(String key : nodes.keySet()) {
+			output += key + ", ";
+		}
+		System.out.println(output);
 	}
 
 	public void addEdge(String startname, String destname, double weight) {
@@ -98,6 +105,7 @@ public class RoseMapper {
 	}
 
 	public void DijkstraShortestPath(String startName, String endName) {
+		resetNodesVisited();
 		LocationNode start = nodes.get(startName);
 		LocationNode end = nodes.get(endName);
 		HashMap<LocationNode, LocationNode> changedAt = new HashMap<>();

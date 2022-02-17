@@ -33,13 +33,75 @@ public class VisualMapper extends JFrame {
 		rmap.addNode(1, "D");
 		rmap.addNode(1, "E");
 		rmap.addNode(1, "F");
+		rmap.addNode(1, "CC");
+		rmap.addNode(1, "N");
+		rmap.addNode(1, "EE");
+		rmap.addNode(1, "W");
+		rmap.addNode(1, "GG");
+		rmap.addNode(1, "BB");
+		rmap.addNode(1, "AA");
+		rmap.addNode(1, "Q");
+		rmap.addNode(1, "L");
+		rmap.addNode(1, "K");
+		rmap.addNode(1, "X");
+		rmap.addNode(1, "V");
+		rmap.addNode(1, "O");
+		rmap.addNode(1, "S");
+		rmap.addNode(1, "P");
+		rmap.addNode(1, "I");
+		rmap.addNode(1, "J");
+		rmap.addNode(1, "F");
+		rmap.addNode(1, "FF");
+		rmap.addNode(1, "R");
+		rmap.addNode(1, "M");
 		
-		rmap.addEdge("A", "B", 8);
-		rmap.addEdge("A", "C", 10);
-		rmap.addEdge("A", "D", 5);
-		rmap.addEdge("B", "C", 1);
-		rmap.addEdge("C", "D", 3);
-		rmap.addEdge("B", "D", 4);
+		rmap.addEdge("D", "B", 2);
+		rmap.addEdge("D", "FF", 10);
+		rmap.addEdge("B", "FF", 8);
+		rmap.addEdge("C", "Z", 5);
+		rmap.addEdge("C", "F", 7);
+		rmap.addEdge("F", "Z", 2);
+		rmap.addEdge("Z", "R", 2);
+		rmap.addEdge("F", "R", 2);
+		rmap.addEdge("M", "J", 10);
+		rmap.addEdge("R", "M", 5);
+		rmap.addEdge("FF", "T", 8);
+		rmap.addEdge("T", "CC", 7);
+		rmap.addEdge("CC", "E", 5);
+		rmap.addEdge("E", "J", 8);
+		rmap.addEdge("E", "V", 9);
+		rmap.addEdge("J", "V", 7);
+		rmap.addEdge("J", "P", 5);
+		rmap.addEdge("V", "P", 2);
+		rmap.addEdge("V", "I", 3);
+		rmap.addEdge("P", "I", 2);
+		rmap.addEdge("I", "N", 7);
+		rmap.addEdge("I", "S", 4);
+		rmap.addEdge("S", "Y", 2);
+		rmap.addEdge("S", "K", 3);
+		rmap.addEdge("V", "K", 4);
+		
+rmap.addEdge("N", "L" ,18);
+rmap.addEdge("N", "A" ,13);
+rmap.addEdge("N", "EE" ,17);
+rmap.addEdge("N", "Q" ,10);
+rmap.addEdge("N", "G" ,20);
+rmap.addEdge("GG", "K" ,17);
+rmap.addEdge("GG", "L", 5);
+rmap.addEdge("K", "X" ,30);
+rmap.addEdge("X", "D" ,60);
+rmap.addEdge("L", "W" ,15);
+rmap.addEdge("W", "BB" ,12);
+rmap.addEdge("W", "G", 3);
+rmap.addEdge("BB", "O", 2);
+rmap.addEdge("O", "EE", 5);
+rmap.addEdge("EE", "AA", 8);
+rmap.addEdge("Q", "U" ,20);
+rmap.addEdge("AA", "U" ,15);
+
+		
+
+		
 
 	}
 
@@ -79,7 +141,7 @@ public class VisualMapper extends JFrame {
 					BorderFactory.createLoweredBevelBorder(), "Output");
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
-			this.setText("hello");
+			this.setText("Choose two of the black circle locations on the map to calculate the walking time!");
 
 		}
 	}
@@ -152,6 +214,7 @@ public class VisualMapper extends JFrame {
 					public void mousePressed(MouseEvent e){
 						try{
 							//rmap.resetAll();
+							VisualMapper.this.cs.setText("Choose two of the black circle locations on the map to calculate the walking time!");
 						}finally{
 
 						}

@@ -2,7 +2,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import org.w3c.dom.events.MouseEvent;
 
 
 
@@ -206,7 +205,7 @@ public class VisualMapper extends JFrame {
 				this.addMouseListener(new MouseAdapter() {
 					public void mousePressed(MouseEvent e) {
 						try {
-							// rmap.resetAll();
+							rmap.modeSwitch("Time");
 							VisualMapper.this.cs.setText(
 									"Choose two of the black circle locations on the map to calculate the walking time!");
 						} finally {

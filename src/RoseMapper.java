@@ -106,8 +106,8 @@ public class RoseMapper {
 				}
 				System.out.println(path);
 				System.out.println("The path costs: " + shortestPathMap.get(end));
-				setStr("The shortest path is: " + path + " cost: " + shortestPathMap.get(end));
-
+				if(this.m==Mode.TIME)setStr("The shortest path is: " + path + " time in minutes: " + shortestPathMap.get(end));
+				else setStr("The shortest path is: " + path + " distance in meters: " + shortestPathMap.get(end));
 				return;
 			}
 			currentNode.scratched = true;

@@ -3,9 +3,21 @@ import java.util.LinkedList;
 public class RoseMapper {
 	private HashMap<String, LocationNode> nodes;
 	public String outStr;
+	enum Mode{
+		TIME,DISTANCE
+	}
+	Mode m;
 	RoseMapper() {
 		HashMap<String, LocationNode> nodes = new HashMap<String, LocationNode>();
 		this.nodes = nodes;
+		this.m=Mode.TIME;
+	}
+	public void modeSwitch(String mString){
+		if(mString=="Time"){
+			this.m=Mode.TIME;
+		}else if(mString=="Distance"){
+			this.m=Mode.DISTANCE;
+		}
 	}
 	public void addNode(int type, String name) {
 		LocationNode temp = new LocationNode(type, name);

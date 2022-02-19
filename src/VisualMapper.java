@@ -1,6 +1,11 @@
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+
+import org.w3c.dom.events.MouseEvent;
+
+
+
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 
@@ -104,6 +109,7 @@ public class VisualMapper extends JFrame {
 				"img/newCampusMap.jpg"));
 		background.setLayout(new FlowLayout());
 		add(background);
+
 		setVisible(true);
 	}
 
@@ -129,12 +135,15 @@ public class VisualMapper extends JFrame {
 		InputField dIn = new InputField();
 		StartButton start = new StartButton();
 		DestinationButton dButton = new DestinationButton();
+		TimeButton tButton=new TimeButton();
+		DistanceButton disBut=new DistanceButton();
 
 		public ControlPanel() {
 			TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),
 					"Control Panel");
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
+
 			this.setLayout(new FlowLayout());
 			this.add(new JLabel("Put in a start location:"));
 			this.add(this.In);
@@ -143,6 +152,13 @@ public class VisualMapper extends JFrame {
 			this.add(this.dButton);
 			this.add(this.start);
 			this.add(new ResetButton());
+			ButtonGroup modes=new ButtonGroup();
+			modes.add(tButton);
+			modes.add(disBut);
+			this.add(tButton);
+			this.add(disBut);
+			
+
 		}
 
 		class StartButton extends JButton {
@@ -193,6 +209,38 @@ public class VisualMapper extends JFrame {
 							// rmap.resetAll();
 							VisualMapper.this.cs.setText(
 									"Choose two of the black circle locations on the map to calculate the walking time!");
+						} finally {
+
+						}
+					}
+				});
+			}
+		}
+
+		class TimeButton extends JRadioButton {
+			public TimeButton() {
+				super("Time");
+				this.addMouseListener(new MouseAdapter() {
+					public void mousePressed(MouseEvent e) {
+
+						try {
+							rmap.modeSwitch("Time");
+						} finally {
+
+						}
+					}
+				});
+			}
+		}
+
+		class DistanceButton extends JRadioButton {
+			public DistanceButton() {
+				super("Distance");
+				this.addMouseListener(new MouseAdapter() {
+					public void mousePressed(MouseEvent e) {
+
+						try {
+							rmap.modeSwitch("Distance");
 						} finally {
 
 						}

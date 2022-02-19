@@ -1,22 +1,16 @@
-
 import java.util.HashMap;
 import java.util.LinkedList;
-
 public class RoseMapper {
 	private HashMap<String, LocationNode> nodes;
-
 	public String outStr;
-
 	RoseMapper() {
 		HashMap<String, LocationNode> nodes = new HashMap<String, LocationNode>();
 		this.nodes = nodes;
 	}
-
 	public void addNode(int type, String name) {
 		LocationNode temp = new LocationNode(type, name);
 		nodes.put(name, temp);
 	}
-
 	public void printNodes() {
 		String output = "";
 		for (String key : nodes.keySet()) {
@@ -25,19 +19,15 @@ public class RoseMapper {
 		System.out.println(output);
 		setStr(output);
 	}
-
 	public void addEdge(String startname, String destname, double weight) {
 		LocationNode source = nodes.get(startname);
 		LocationNode destination = nodes.get(destname);
-
 		source.edges.add(new Path(source, destination, weight));
 		destination.edges.add(new Path(destination, source, weight));
 	}
-
 	public void printEdges() {
 		for (String key : nodes.keySet()) {
 			LinkedList<Path> edges = nodes.get(key).edges;
-
 			if (edges.isEmpty()) {
 				System.out.println("Node " + nodes.get(key).name + " has no edges.");
 				continue;
@@ -50,7 +40,6 @@ public class RoseMapper {
 			System.out.println();
 		}
 	}
-
 	public boolean hasEdge(LocationNode source, LocationNode destination) {
 		LinkedList<Path> edges = source.edges;
 		for (Path edge : edges) {
@@ -60,13 +49,11 @@ public class RoseMapper {
 		}
 		return false;
 	}
-
 	public void resetNodes() {
 		for (String key : nodes.keySet()) {
 			nodes.get(key).scratched = false;
 		}
 	}
-
 	public void DijkstraShortestPath(String startName, String endName, String holder) {
 		resetNodes();
 		LocationNode start = nodes.get(startName);
@@ -123,11 +110,9 @@ public class RoseMapper {
 			}
 		}
 	}
-
 	private void setStr(String string) {
 		outStr = string;
 	}
-
 	private LocationNode nextNode(HashMap<LocationNode, Double> shortestPathMap) {
 
 		double shortestDistance = Double.POSITIVE_INFINITY;
@@ -147,7 +132,6 @@ public class RoseMapper {
 		}
 		return closestReachableNode;
 	}
-
 	public class Path implements Comparable<Path> {
 
 		LocationNode source;
@@ -171,7 +155,6 @@ public class RoseMapper {
 				return -1;
 		}
 	}
-
 	class LocationNode {
 		int type;
 		String name;

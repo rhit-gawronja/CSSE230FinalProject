@@ -1,15 +1,13 @@
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
 import java.awt.event.*;
-
 import java.io.FileNotFoundException;
 
 public class VisualMapper extends JFrame {
 	private RoseMapper rmap;
 	private Console cs = new Console();
+
 	public static void main(String[] args) throws FileNotFoundException {
 		RoseMapper rmap = new RoseMapper();
 		new VisualMapper(rmap);
@@ -125,11 +123,13 @@ public class VisualMapper extends JFrame {
 			this.setText("Choose two of the black circle locations on the map to calculate the walking time!");
 		}
 	}
+
 	class ControlPanel extends JPanel {
 		InputField In = new InputField();
 		InputField dIn = new InputField();
 		StartButton start = new StartButton();
 		DestinationButton dButton = new DestinationButton();
+
 		public ControlPanel() {
 			TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),
 					"Control Panel");
@@ -144,6 +144,7 @@ public class VisualMapper extends JFrame {
 			this.add(this.start);
 			this.add(new ResetButton());
 		}
+
 		class StartButton extends JButton {
 			public StartButton() {
 				super("Find Shortest Path");

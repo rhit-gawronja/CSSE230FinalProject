@@ -6,6 +6,7 @@ public class RoseMapper {
 	enum Mode{
 		TIME,DISTANCE
 	}
+	//working
 	Mode m;
 	RoseMapper() {
 		HashMap<String, LocationNode> nodes = new HashMap<String, LocationNode>();

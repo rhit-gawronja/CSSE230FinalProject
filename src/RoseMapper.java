@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.LinkedList;
+
 //Project by Derek Inskeep and Joey Gawron
 public class RoseMapper {
 	private HashMap<String, LocationNode> nodes;
@@ -35,7 +36,7 @@ public class RoseMapper {
 		for (String key : nodes.keySet()) {
 			output += key + ", ";
 		}
-		System.out.println(output);
+		
 		setStr(output);
 	}
 
@@ -107,12 +108,10 @@ public class RoseMapper {
 		while (true) {
 			LocationNode currentNode = nextNode(shortestPathMap);
 			if (currentNode == null) {
-				System.out.println("There isn't a path between " + start.name + " and " + end.name);
+
 				return 0.0;
 			}
 			if (currentNode == end) {
-				System.out.println(
-						"The path with the smallest weight between " + start.name + " and " + end.name + " is:");
 
 				LocationNode child = end;
 				String path = end.name;
@@ -124,8 +123,7 @@ public class RoseMapper {
 					path = parent.name + "->" + path;
 					child = parent;
 				}
-				System.out.println(path);
-				System.out.println("The path costs: " + shortestPathMap.get(end));
+
 				if (this.m == Mode.TIME)
 					setStr("The path is: " + path + " time in minutes: " + shortestPathMap.get(end));
 				else
@@ -156,8 +154,12 @@ public class RoseMapper {
 		for (String key : nodes.keySet()) {
 			if (nodes.get(key).scratched)
 				continue;
-
-			double currentDistance = shortestPathMap.get(nodes.get(key));
+			double currentDistance = 0.0;
+			if (this.m == Mode.DISTANCE) {
+				currentDistance = shortestPathMap.get(nodes.get(key));
+			} else if (this.m == Mode.TIME) {
+				currentDistance = shortestPathMap.get(nodes.get(key)) * nodes.get(key).timeMult;
+			}
 			if (currentDistance == Double.POSITIVE_INFINITY)
 				continue;
 

@@ -12,9 +12,10 @@ public class VisualMapper extends JFrame {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		RoseMapper rmap = new RoseMapper();
+		//creation of the graph
 		new VisualMapper(rmap);
 		rmap.addNode(2, "A");
-		rmap.addNode(8, "B");
+		rmap.addNode(3, "B");
 		rmap.addNode(1, "C");
 		rmap.addNode(7, "D");
 		rmap.addNode(4, "E");
@@ -22,7 +23,7 @@ public class VisualMapper extends JFrame {
 		rmap.addNode(2, "G");
 		rmap.addNode(9, "H");
 		rmap.addNode(4, "I");
-		rmap.addNode(1, "J");
+		rmap.addNode(50, "J");//higher weighted points for routing demonstration
 		rmap.addNode(3, "K");
 		rmap.addNode(1, "L");
 		rmap.addNode(3, "M");
@@ -41,12 +42,12 @@ public class VisualMapper extends JFrame {
 		rmap.addNode(2, "Z");
 		rmap.addNode(3, "AA");
 		rmap.addNode(1, "BB");
-		rmap.addNode(5, "CC");
+		rmap.addNode(500, "CC");//higher weighted points for routing demonstration
 		rmap.addNode(1, "DD");
 		rmap.addNode(2, "EE");
 		rmap.addNode(5, "FF");
 		rmap.addNode(3, "GG");
-
+		//assignment of the edges of the graph
 		rmap.addEdge("D", "B", 2);
 		rmap.addEdge("D", "FF", 10);
 		rmap.addEdge("B", "FF", 8);
@@ -89,34 +90,35 @@ public class VisualMapper extends JFrame {
 		rmap.addEdge("EE", "AA", 8);
 		rmap.addEdge("Q", "U", 20);
 		rmap.addEdge("AA", "U", 15);
+		rmap.addEdge("C", "B", 2);
 
 	}
-
+	//constructor for the VisualMapper
 	public VisualMapper(RoseMapper rmap) {
 		super("RoseMapper!!!!");
 		this.rmap = rmap;
-		// add things to the window here
+		
 		this.setSize(1800, 800);
 		Container content = getContentPane();
 		content.setLayout(new BorderLayout());
 		content.add(new ControlPanel(), BorderLayout.SOUTH);
 		content.add(this.cs, BorderLayout.NORTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JLabel background = new JLabel(new ImageIcon( // TODO scale image with frame size?
+		JLabel background = new JLabel(new ImageIcon( 
 				"img/newCampusMap.jpg"));
 		background.setLayout(new FlowLayout());
 		add(background);
 
 		setVisible(true);
 	}
-
+	//Text field creation
 	class InputField extends JTextField {
 		public InputField() {
 			this.setColumns(3);
 			this.selectAll();
 		}
 	}
-
+	//Output console
 	class Console extends JTextArea {
 		public Console() {
 			this.setEditable(true);
@@ -128,6 +130,7 @@ public class VisualMapper extends JFrame {
 	}
 
 	class ControlPanel extends JPanel {
+		//initialization of buttons and text areas
 		InputField In = new InputField();
 		InputField dIn = new InputField();
 		InputField Cin = new InputField();
@@ -152,7 +155,7 @@ public class VisualMapper extends JFrame {
 			this.add(this.start);
 			this.add(new JLabel("Input cost for trip by cost"));
 			this.add(this.Cin);
-			this.add(new ResetButton());
+			this.add(new CostButton());
 			ButtonGroup modes = new ButtonGroup();
 			modes.add(tButton);
 			modes.add(disBut);
@@ -160,7 +163,7 @@ public class VisualMapper extends JFrame {
 			this.add(disBut);
 
 		}
-
+		// the find shortest path button that triggers the base of the code.
 		class StartButton extends JButton {
 			public StartButton() {
 				super("Find Shortest Path");
@@ -181,7 +184,7 @@ public class VisualMapper extends JFrame {
 				});
 			}
 		}
-
+		//lists all availble nodes
 		class DestinationButton extends JButton {
 			public DestinationButton() {
 				super("List Avialable Nodes");
@@ -199,9 +202,9 @@ public class VisualMapper extends JFrame {
 				});
 			}
 		}
-
-		class ResetButton extends JButton {
-			public ResetButton() {
+		//does a trip by cost
+		class CostButton extends JButton {
+			public CostButton() {
 				super("Trip by cost");
 				this.addMouseListener(new MouseAdapter() {
 					public void mousePressed(MouseEvent e) {

@@ -14,11 +14,19 @@ public class VisualMapper extends JFrame {
 	public static void main(String[] args) throws FileNotFoundException {
 		RoseMapper rmap = new RoseMapper();
 		new VisualMapper(rmap);
+<<<<<<< HEAD
 		rmap.addNode(2, "A");
 		rmap.addNode(8, "B");
 		rmap.addNode(1, "C");
 		rmap.addNode(7, "D");
 		rmap.addNode(4, "E");
+=======
+		rmap.addNode(3, "A");
+		rmap.addNode(3, "B");
+		rmap.addNode(2, "C");
+		rmap.addNode(5, "D");
+		rmap.addNode(1, "E");
+>>>>>>> 880868634149cda9b994a8089e7900ae5de9f878
 		rmap.addNode(1, "F");
 		rmap.addNode(2, "G");
 		rmap.addNode(9, "H");

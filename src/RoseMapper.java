@@ -98,10 +98,10 @@ public class RoseMapper {
 				shortestPathMap.put(nodes.get(key), Double.POSITIVE_INFINITY);
 		}
 		for (Path edge : start.edges) {
-			if(this.m==Mode.DISTANCE){
+			if(this.m == Mode.DISTANCE) {
 			shortestPathMap.put(edge.destination, edge.weight);
-			}else if(this.m==Mode.TIME){
-				shortestPathMap.put(edge.destination,edge.weight * edge.source.timeMult);
+			}else {
+			shortestPathMap.put(edge.destination, edge.weight * edge.source.timeMult);
 			}
 			changedAt.put(edge.destination, start);
 		}

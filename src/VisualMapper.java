@@ -14,39 +14,39 @@ public class VisualMapper extends JFrame {
 		RoseMapper rmap = new RoseMapper();
 		//creation of the graph
 		new VisualMapper(rmap);
-		rmap.addNode(2, "A");
-		rmap.addNode(3, "B");
-		rmap.addNode(1, "C");
-		rmap.addNode(7, "D");
-		rmap.addNode(4, "E");
-		rmap.addNode(1, "F");
-		rmap.addNode(2, "G");
-		rmap.addNode(9, "H");
-		rmap.addNode(4, "I");
+		rmap.addNode(2, "A");//
+		rmap.addNode(3, "B");//
+		rmap.addNode(1, "C");//
+		rmap.addNode(7, "D");//
+		rmap.addNode(4, "E");//
+		rmap.addNode(1, "F");//
+		rmap.addNode(2, "G");//
+		rmap.addNode(9, "H");//
+		rmap.addNode(4, "I");//
 		rmap.addNode(50, "J");//higher weighted points for routing demonstration
-		rmap.addNode(3, "K");
-		rmap.addNode(1, "L");
-		rmap.addNode(3, "M");
-		rmap.addNode(1, "N");
-		rmap.addNode(2, "O");
-		rmap.addNode(1, "P");
-		rmap.addNode(3, "Q");
-		rmap.addNode(2, "R");
-		rmap.addNode(4, "S");
-		rmap.addNode(2, "T");
-		rmap.addNode(1, "U");
-		rmap.addNode(4, "V");
-		rmap.addNode(3, "W");
-		rmap.addNode(1, "X");
-		rmap.addNode(6, "Y");
-		rmap.addNode(2, "Z");
-		rmap.addNode(3, "AA");
-		rmap.addNode(1, "BB");
+		rmap.addNode(3, "K");//
+		rmap.addNode(1, "L");//
+		rmap.addNode(3, "M");//
+		rmap.addNode(1, "N");//
+		rmap.addNode(2, "O");//
+		rmap.addNode(1, "P");//
+		rmap.addNode(3, "Q");//
+		rmap.addNode(2, "R");//
+		rmap.addNode(4, "S");//
+		rmap.addNode(2, "T");//
+		rmap.addNode(1, "U");//
+		rmap.addNode(4, "V");//
+		rmap.addNode(3, "W");//
+		rmap.addNode(1, "X");//
+		rmap.addNode(6, "Y");//
+		rmap.addNode(2, "Z");//
+		rmap.addNode(3, "AA");//
+		rmap.addNode(1, "BB");//
 		rmap.addNode(500, "CC");//higher weighted points for routing demonstration
-		rmap.addNode(1, "DD");
-		rmap.addNode(2, "EE");
-		rmap.addNode(5, "FF");
-		rmap.addNode(3, "GG");
+		rmap.addNode(1, "DD");//
+		rmap.addNode(2, "EE");//
+		rmap.addNode(5, "FF");//
+		rmap.addNode(3, "GG");//
 		//assignment of the edges of the graph
 		rmap.addEdge("D", "B", 2);
 		rmap.addEdge("D", "FF", 10);
@@ -72,6 +72,7 @@ public class VisualMapper extends JFrame {
 		rmap.addEdge("I", "S", 4);
 		rmap.addEdge("S", "Y", 2);
 		rmap.addEdge("S", "K", 3);
+		rmap.addEdge("N", "S", 7);
 		rmap.addEdge("V", "K", 4);
 		rmap.addEdge("N", "L", 18);
 		rmap.addEdge("N", "A", 13);
@@ -91,6 +92,18 @@ public class VisualMapper extends JFrame {
 		rmap.addEdge("Q", "U", 20);
 		rmap.addEdge("AA", "U", 15);
 		rmap.addEdge("C", "B", 2);
+		rmap.addEdge("DD", "H", 5);
+		rmap.addEdge("H", "I", 4);
+		rmap.addEdge("M", "DD", 12);
+		rmap.addEdge("Q", "A", 7);
+		rmap.addEdge("N", "Q", 11);
+		rmap.addEdge("C", "B", 2);
+		rmap.addEdge("GG", "BB", 12);
+		rmap.addEdge("EE", "A", 2);
+		rmap.addEdge("A", "AA", 5);
+		rmap.addEdge("H", "Q", 10);
+		rmap.addEdge("Z", "DD", 17);
+		rmap.addEdge("U", "K", 24);
 
 	}
 	//constructor for the VisualMapper

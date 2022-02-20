@@ -1,29 +1,36 @@
 import java.util.HashMap;
 import java.util.LinkedList;
+
 public class RoseMapper {
 	private HashMap<String, LocationNode> nodes;
 	public String outStr;
-	enum Mode{
-		TIME,DISTANCE
+
+	enum Mode {
+		TIME, DISTANCE
 	}
-	//working
+
+	
 	Mode m;
+
 	RoseMapper() {
 		HashMap<String, LocationNode> nodes = new HashMap<String, LocationNode>();
 		this.nodes = nodes;
-		this.m=Mode.TIME;
+		this.m = Mode.TIME;
 	}
-	public void modeSwitch(String mString){
-		if(mString=="Time"){
-			this.m=Mode.TIME;
-		}else if(mString=="Distance"){
-			this.m=Mode.DISTANCE;
+
+	public void modeSwitch(String mString) {
+		if (mString == "Time") {
+			this.m = Mode.TIME;
+		} else if (mString == "Distance") {
+			this.m = Mode.DISTANCE;
 		}
 	}
+
 	public void addNode(int type, String name) {
 		LocationNode temp = new LocationNode(type, name);
 		nodes.put(name, temp);
 	}
+
 	public void printNodes() {
 		String output = "";
 		for (String key : nodes.keySet()) {
@@ -32,12 +39,14 @@ public class RoseMapper {
 		System.out.println(output);
 		setStr(output);
 	}
+
 	public void addEdge(String startname, String destname, double weight) {
 		LocationNode source = nodes.get(startname);
 		LocationNode destination = nodes.get(destname);
 		source.edges.add(new Path(source, destination, weight));
 		destination.edges.add(new Path(destination, source, weight));
 	}
+
 	public void printEdges() {
 		for (String key : nodes.keySet()) {
 			LinkedList<Path> edges = nodes.get(key).edges;
@@ -53,6 +62,7 @@ public class RoseMapper {
 			System.out.println();
 		}
 	}
+
 	public boolean hasEdge(LocationNode source, LocationNode destination) {
 		LinkedList<Path> edges = source.edges;
 		for (Path edge : edges) {
@@ -62,12 +72,19 @@ public class RoseMapper {
 		}
 		return false;
 	}
+
 	public void resetNodes() {
 		for (String key : nodes.keySet()) {
 			nodes.get(key).scratched = false;
 		}
 	}
-	public void DijkstraShortestPath(String startName, String endName, String holder) {
+
+	public double DijkstraShortestPath(String startName, String endName) {
+		if((!nodes.containsKey(startName))||(!nodes.containsKey(endName))){
+			throw new NullPointerException("please put in valid location nodes");
+			
+			
+		}
 		resetNodes();
 		LocationNode start = nodes.get(startName);
 		LocationNode end = nodes.get(endName);
@@ -81,7 +98,11 @@ public class RoseMapper {
 				shortestPathMap.put(nodes.get(key), Double.POSITIVE_INFINITY);
 		}
 		for (Path edge : start.edges) {
+			if(this.m==Mode.DISTANCE){
 			shortestPathMap.put(edge.destination, edge.weight);
+			}else if(this.m==Mode.TIME){
+				shortestPathMap.put(edge.destination,edge.weight * edge.source.timeMult);
+			}
 			changedAt.put(edge.destination, start);
 		}
 		start.scratched = true;
@@ -89,7 +110,7 @@ public class RoseMapper {
 			LocationNode currentNode = nextNode(shortestPathMap);
 			if (currentNode == null) {
 				System.out.println("There isn't a path between " + start.name + " and " + end.name);
-				return;
+				return 0.0;
 			}
 			if (currentNode == end) {
 				System.out.println(
@@ -107,9 +128,11 @@ public class RoseMapper {
 				}
 				System.out.println(path);
 				System.out.println("The path costs: " + shortestPathMap.get(end));
-				if(this.m==Mode.TIME)setStr("The shortest path is: " + path + " time in minutes: " + shortestPathMap.get(end));
-				else setStr("The shortest path is: " + path + " distance in meters: " + shortestPathMap.get(end));
-				return;
+				if (this.m == Mode.TIME)
+					setStr("The path is: " + path + " time in minutes: " + shortestPathMap.get(end));
+				else
+					setStr("The path is: " + path + " distance in elephant strides: " + shortestPathMap.get(end));
+				return shortestPathMap.get(end);
 			}
 			currentNode.scratched = true;
 			for (Path edge : currentNode.edges) {
@@ -123,9 +146,11 @@ public class RoseMapper {
 			}
 		}
 	}
+
 	private void setStr(String string) {
 		outStr = string;
 	}
+
 	private LocationNode nextNode(HashMap<LocationNode, Double> shortestPathMap) {
 
 		double shortestDistance = Double.POSITIVE_INFINITY;
@@ -145,6 +170,7 @@ public class RoseMapper {
 		}
 		return closestReachableNode;
 	}
+
 	public class Path implements Comparable<Path> {
 
 		LocationNode source;
@@ -168,17 +194,49 @@ public class RoseMapper {
 				return -1;
 		}
 	}
+
 	class LocationNode {
-		int type;
+		int timeMult;
 		String name;
 		private boolean scratched;
 		LinkedList<Path> edges;
 
-		LocationNode(int type, String name) {
-			this.type = type;
+		LocationNode(int timeMult, String name) {
+			this.timeMult = timeMult;
 			this.name = name;
 			scratched = false;
 			edges = new LinkedList<>();
+		}
+	}
+
+	public void tripByCost(String startNode, Double cost) {
+		double shortestCurrentPath = Double.POSITIVE_INFINITY;
+		String tempStr = "";
+		String tempStrb = "";
+		double shortShort=0.0;
+		for (String key : nodes.keySet()) {
+			if(key==startNode)continue;
+
+			double temp = DijkstraShortestPath(startNode, key);
+			if (!(temp < cost)) {
+				if (temp < shortestCurrentPath) {
+					shortestCurrentPath = temp;
+					tempStr = outStr;
+				}
+			}
+			else{
+				if(temp>shortShort){
+					shortShort=temp;
+					tempStrb=outStr;
+				}
+			}
+
+		}
+		if((cost-shortShort)<(shortestCurrentPath-cost)){
+			outStr = tempStrb;
+		}
+		else{
+			outStr=tempStr;
 		}
 	}
 

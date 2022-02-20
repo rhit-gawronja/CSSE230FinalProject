@@ -29,7 +29,7 @@ public class Testing {
 		graphWeighted.addEdge("five", "four", 1);
 		graphWeighted.addEdge("five", "six", 8);
 
-		graphWeighted.DijkstraShortestPath("zero", "six",null);
+		//graphWeighted.DijkstraShortestPath("zero", "six",null);
 	}
 	
 }

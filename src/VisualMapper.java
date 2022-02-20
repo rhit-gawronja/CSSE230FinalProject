@@ -1,10 +1,9 @@
 import java.awt.*;
+
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-
-
-//fixed file
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 
@@ -15,39 +14,39 @@ public class VisualMapper extends JFrame {
 	public static void main(String[] args) throws FileNotFoundException {
 		RoseMapper rmap = new RoseMapper();
 		new VisualMapper(rmap);
-		rmap.addNode(1, "A");
-		rmap.addNode(1, "B");
+		rmap.addNode(2, "A");
+		rmap.addNode(8, "B");
 		rmap.addNode(1, "C");
-		rmap.addNode(1, "D");
-		rmap.addNode(1, "E");
+		rmap.addNode(7, "D");
+		rmap.addNode(4, "E");
 		rmap.addNode(1, "F");
-		rmap.addNode(1, "G");
-		rmap.addNode(1, "H");
-		rmap.addNode(1, "I");
+		rmap.addNode(2, "G");
+		rmap.addNode(9, "H");
+		rmap.addNode(4, "I");
 		rmap.addNode(1, "J");
-		rmap.addNode(1, "K");
+		rmap.addNode(3, "K");
 		rmap.addNode(1, "L");
-		rmap.addNode(1, "M");
+		rmap.addNode(3, "M");
 		rmap.addNode(1, "N");
-		rmap.addNode(1, "O");
+		rmap.addNode(2, "O");
 		rmap.addNode(1, "P");
-		rmap.addNode(1, "Q");
-		rmap.addNode(1, "R");
-		rmap.addNode(1, "S");
-		rmap.addNode(1, "T");
+		rmap.addNode(3, "Q");
+		rmap.addNode(2, "R");
+		rmap.addNode(4, "S");
+		rmap.addNode(2, "T");
 		rmap.addNode(1, "U");
-		rmap.addNode(1, "V");
-		rmap.addNode(1, "W");
+		rmap.addNode(4, "V");
+		rmap.addNode(3, "W");
 		rmap.addNode(1, "X");
-		rmap.addNode(1, "Y");
-		rmap.addNode(1, "Z");
-		rmap.addNode(1, "AA");
+		rmap.addNode(6, "Y");
+		rmap.addNode(2, "Z");
+		rmap.addNode(3, "AA");
 		rmap.addNode(1, "BB");
-		rmap.addNode(1, "CC");
+		rmap.addNode(5, "CC");
 		rmap.addNode(1, "DD");
-		rmap.addNode(1, "EE");
-		rmap.addNode(1, "FF");
-		rmap.addNode(1, "GG");
+		rmap.addNode(2, "EE");
+		rmap.addNode(5, "FF");
+		rmap.addNode(3, "GG");
 
 		rmap.addEdge("D", "B", 2);
 		rmap.addEdge("D", "FF", 10);
@@ -132,10 +131,11 @@ public class VisualMapper extends JFrame {
 	class ControlPanel extends JPanel {
 		InputField In = new InputField();
 		InputField dIn = new InputField();
+		InputField Cin = new InputField();
 		StartButton start = new StartButton();
 		DestinationButton dButton = new DestinationButton();
-		TimeButton tButton=new TimeButton();
-		DistanceButton disBut=new DistanceButton();
+		TimeButton tButton = new TimeButton();
+		DistanceButton disBut = new DistanceButton();
 
 		public ControlPanel() {
 			TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),
@@ -149,14 +149,16 @@ public class VisualMapper extends JFrame {
 			this.add(new JLabel("Put in your final destination:"));
 			this.add(this.dIn);
 			this.add(this.dButton);
+
 			this.add(this.start);
+			this.add(new JLabel("Input cost for trip by cost"));
+			this.add(this.Cin);
 			this.add(new ResetButton());
-			ButtonGroup modes=new ButtonGroup();
+			ButtonGroup modes = new ButtonGroup();
 			modes.add(tButton);
 			modes.add(disBut);
 			this.add(tButton);
 			this.add(disBut);
-			
 
 		}
 
@@ -167,14 +169,14 @@ public class VisualMapper extends JFrame {
 					public void mousePressed(MouseEvent e) {
 						try {
 							String a = ControlPanel.this.In.getText();
+
 							String b = ControlPanel.this.dIn.getText();
-							String holder = null;
-							rmap.DijkstraShortestPath(a, b, holder);
 
-							// System.out.println(holder);
+							rmap.DijkstraShortestPath(a, b);
+
 							VisualMapper.this.cs.setText(rmap.outStr);
-						} finally {
-
+						} catch (NullPointerException err) {
+							VisualMapper.this.cs.setText("please put in valid locations!");
 						}
 					}
 				});
@@ -201,15 +203,20 @@ public class VisualMapper extends JFrame {
 
 		class ResetButton extends JButton {
 			public ResetButton() {
-				super("Not Implimented Yet!");
+				super("Trip by cost");
 				this.addMouseListener(new MouseAdapter() {
 					public void mousePressed(MouseEvent e) {
 						try {
-							rmap.modeSwitch("Time");
-							VisualMapper.this.cs.setText(
-									"Choose two of the black circle locations on the map to calculate the walking time!");
-						} finally {
 
+							String startNode = ControlPanel.this.In.getText();
+
+							Double cost = Double.parseDouble(ControlPanel.this.Cin.getText());
+
+							rmap.tripByCost(startNode, cost);
+
+							VisualMapper.this.cs.setText(rmap.outStr);
+						} catch (NullPointerException err) {
+							VisualMapper.this.cs.setText("please put in valid locations and cost!");
 						}
 					}
 				});

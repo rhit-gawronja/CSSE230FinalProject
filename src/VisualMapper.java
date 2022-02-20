@@ -1,12 +1,11 @@
 import java.awt.*;
 
-
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import java.awt.event.*;
 import java.io.FileNotFoundException;
-
+//Project by Derek Inskeep and Joey Gawron
 public class VisualMapper extends JFrame {
 	private RoseMapper rmap;
 	private Console cs = new Console();

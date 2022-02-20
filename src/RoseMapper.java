@@ -1,6 +1,6 @@
 import java.util.HashMap;
 import java.util.LinkedList;
-
+//Project by Derek Inskeep and Joey Gawron
 public class RoseMapper {
 	private HashMap<String, LocationNode> nodes;
 	public String outStr;
@@ -9,7 +9,6 @@ public class RoseMapper {
 		TIME, DISTANCE
 	}
 
-	
 	Mode m;
 
 	RoseMapper() {
@@ -80,10 +79,9 @@ public class RoseMapper {
 	}
 
 	public double DijkstraShortestPath(String startName, String endName) {
-		if((!nodes.containsKey(startName))||(!nodes.containsKey(endName))){
+		if ((!nodes.containsKey(startName)) || (!nodes.containsKey(endName))) {
 			throw new NullPointerException("please put in valid location nodes");
-			
-			
+
 		}
 		resetNodes();
 		LocationNode start = nodes.get(startName);
@@ -98,10 +96,10 @@ public class RoseMapper {
 				shortestPathMap.put(nodes.get(key), Double.POSITIVE_INFINITY);
 		}
 		for (Path edge : start.edges) {
-			if(this.m == Mode.DISTANCE) {
-			shortestPathMap.put(edge.destination, edge.weight);
-			}else if(this.m==Mode.TIME){
-			shortestPathMap.put(edge.destination, edge.weight * edge.source.timeMult);
+			if (this.m == Mode.DISTANCE) {
+				shortestPathMap.put(edge.destination, edge.weight);
+			} else if (this.m == Mode.TIME) {
+				shortestPathMap.put(edge.destination, edge.weight * edge.source.timeMult);
 			}
 			changedAt.put(edge.destination, start);
 		}
@@ -213,9 +211,10 @@ public class RoseMapper {
 		double shortestCurrentPath = Double.POSITIVE_INFINITY;
 		String tempStr = "";
 		String tempStrb = "";
-		double shortShort=0.0;
+		double shortShort = 0.0;
 		for (String key : nodes.keySet()) {
-			if(key==startNode)continue;
+			if (key == startNode)
+				continue;
 
 			double temp = DijkstraShortestPath(startNode, key);
 			if (!(temp < cost)) {
@@ -223,20 +222,18 @@ public class RoseMapper {
 					shortestCurrentPath = temp;
 					tempStr = outStr;
 				}
-			}
-			else{
-				if(temp>shortShort){
-					shortShort=temp;
-					tempStrb=outStr;
+			} else {
+				if (temp > shortShort) {
+					shortShort = temp;
+					tempStrb = outStr;
 				}
 			}
 
 		}
-		if((cost-shortShort)<(shortestCurrentPath-cost)){
+		if ((cost - shortShort) < (shortestCurrentPath - cost)) {
 			outStr = tempStrb;
-		}
-		else{
-			outStr=tempStr;
+		} else {
+			outStr = tempStr;
 		}
 	}
 

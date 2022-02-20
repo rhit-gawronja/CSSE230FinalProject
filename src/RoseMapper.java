@@ -81,7 +81,11 @@ public class RoseMapper {
 				shortestPathMap.put(nodes.get(key), Double.POSITIVE_INFINITY);
 		}
 		for (Path edge : start.edges) {
+			if(this.m == Mode.DISTANCE) {
 			shortestPathMap.put(edge.destination, edge.weight);
+			}else {
+			shortestPathMap.put(edge.destination, edge.weight * edge.source.timeMult);
+			}
 			changedAt.put(edge.destination, start);
 		}
 		start.scratched = true;
@@ -169,13 +173,13 @@ public class RoseMapper {
 		}
 	}
 	class LocationNode {
-		int type;
+		int timeMult;
 		String name;
 		private boolean scratched;
 		LinkedList<Path> edges;
 
 		LocationNode(int type, String name) {
-			this.type = type;
+			this.timeMult = type;
 			this.name = name;
 			scratched = false;
 			edges = new LinkedList<>();

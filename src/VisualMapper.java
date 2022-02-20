@@ -15,10 +15,10 @@ public class VisualMapper extends JFrame {
 	public static void main(String[] args) throws FileNotFoundException {
 		RoseMapper rmap = new RoseMapper();
 		new VisualMapper(rmap);
-		rmap.addNode(1, "A");
-		rmap.addNode(1, "B");
-		rmap.addNode(1, "C");
-		rmap.addNode(1, "D");
+		rmap.addNode(3, "A");
+		rmap.addNode(3, "B");
+		rmap.addNode(2, "C");
+		rmap.addNode(5, "D");
 		rmap.addNode(1, "E");
 		rmap.addNode(1, "F");
 		rmap.addNode(1, "G");
